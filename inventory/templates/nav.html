@@ -1,0 +1,28 @@
+
+{% block title %}Welcome {% endblock %}
+{% block head %}Welcome {% endblock %}
+{% block content %}
+{% load i18n %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<a href="/pages/home/" style="padding:5px;">Home</a>
+<a href="/pages/new/" style="padding:5px;">Add Product</a>
+<a href="/pages/list/" style="padding:5px;">Show Products</a>
+<a href="/pages/" style="padding:5px;">Graph</a>
+{% if user.is_authenticated %}
+<div class="alert alert-success" role="alert">
+    <h3>Welcome {{ user.username }}!</h3>
+    <a href="{% url 'logout' %}">Logout?</a>
+</div>
+{% else %}
+<div class="alert alert-success" role="alert">
+    <h3>Welcome!</h3>
+    <a href="{% url 'register' %}">Signup</a>
+    <a href="{% url 'login' %}">Login</a>
+</div>
+{% endif %}
+
+    {% endblock %}
+
+

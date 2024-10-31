@@ -1,0 +1,65 @@
+<html lang="en-US"> 
+  <head>
+    <meta charset="utf-8" />
+    <title>Control Room</title>
+    <style>
+      .header {
+        background-color: #4CAF50; /* Green background for the header */
+        padding: 15px;
+        text-align: center;
+        color: white;
+        margin-bottom: 20px; /* Space below the header */
+      }
+      .button-header {
+        padding: 10px 15px;
+        background-color: #005e32;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline from link */
+        text-align: center;
+        font-weight: bold;
+      }
+      .button-header:hover {
+        background-color: #004927; /* Darker blue on hover */
+      }
+      .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Space between buttons */
+      }
+      .button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline from link */
+        text-align: center;
+      }
+      .button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+      }
+    </style>
+  </head>
+  
+  <body>    
+
+    <div class="header">
+      <a href="/home" class="button-header">Home</a>
+      <a href="/inventory/add" class="button-header">Add new item</a>
+    </div>
+
+    {% if Item_list %}
+        <div class="button-container">
+        {% for item in Item_list %}
+            <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }}]</a>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No items are available.</p>
+    {% endif %}
+  </body>
+</html>

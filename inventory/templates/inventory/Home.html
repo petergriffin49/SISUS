@@ -1,0 +1,34 @@
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Control Room</title>
+  </head>
+  
+  <body>
+    
+    <!--{% if user.is_authenticated %}
+    <div class="alert alert-success" role="alert">
+        <h3>Welcome {{ user.username }}!</h3>
+        <a href="{% url 'logout' %}">Logout?</a>
+    </div>
+    --{% else %}
+    <div class="alert alert-success" role="alert">
+        <a href="{% url 'register' %}">Signup</a>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+    {% endif %}-->
+
+    <h3>Welcome {{ user.username }}!</h3>
+    
+    <div>
+      <a href="{% url 'inventory' %}">Go to Inventory</a>
+    </div>
+    <div>
+      <a href="{% url 'analytics' %}">View Analytics</a>
+    </div>
+    <div>
+      <a href="{% url 'logout' %}">Logout?</a>
+    </div>
+
+  </body>
+</html>

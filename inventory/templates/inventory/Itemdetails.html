@@ -1,0 +1,17 @@
+<html lang="en-US">
+  <head>
+      <meta charset="utf-8" />
+      <title>Item Details</title>
+  </head>
+  <body>
+    <p> <b>{{ Item.Item_name }}</b></p>
+    <p> <b>Description:</b> {{ Item.Item_description }} </p>
+    <p> <b>Quantity:</b> {{Item.Item_amount }}</p>
+
+    <form action="{% url 'delete_item' Item.id %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+
+  </body>
+</html>
