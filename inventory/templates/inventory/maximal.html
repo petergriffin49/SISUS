@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Page</title>
+    <style>
+        /* General reset and basic styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        /* Header styling */
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-header {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .button-header:hover {
+            background-color: #45a049;
+        }
+
+        /* Container for item cards */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Item card styling */
+        .button-container ul {
+            list-style-type: none;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 220px;
+        }
+
+        /* Main button on each card */
+        .button {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Inner item details */
+        .button-container ul li {
+            margin-bottom: 5px;
+        }
+
+        .button-container ul li b {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/home" class="button-header">Home</a>
+        <a href="/inventory/add" class="button-header">Add new item</a>
+        <a href="/inventory" class="button-header">Minimal view</a>
+    </div>
+
+    {% if Item_list %}
+        <div class="button-container">
+        {% for item in Item_list %}
+            <ul>
+                <li><a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }}</a>
+                    <p><b>Amount:</b> {{ item.Item_amount }}</p>
+                    <p><b>Description:</b> {{ item.Item_description }}</p>
+                </li>
+            </ul>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No items are available.</p>
+    {% endif %}
+</body>
+</html>

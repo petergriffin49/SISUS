@@ -70,12 +70,18 @@ def Itemdetails(request, item_id):
         "Item": Item.objects.get(id = item_id),
     }
     return HttpResponse(template.render(context,request))
+
+def Maximalview(request):
+    template = loader.get_template("inventory/maximal.html")
+    Item_list = Item.objects.all()
+    context = {
+        "Item_list": Item_list,
+    }
+    return HttpResponse(template.render(context,request))
     
 # [hanalytics]
 @login_required
 def Analytics(request):
-    context = {
-        
-    }
+    context = {}
     template = loader.get_template("inventory/Analytics.html")
     return HttpResponse(template.render(context,request))
