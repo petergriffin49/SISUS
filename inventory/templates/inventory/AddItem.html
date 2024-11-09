@@ -85,30 +85,12 @@
       </div>
       
     <h2><p class="small">Add a new item</p></h2>
-    <!--Submission form for new hangout spots-->
+    
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="button-submit">Add this item</button>
       </form> 
-
-
-    <!--
-    <form method="get" action="/addspot">
-        <label for="SpotName">Spot name:</label><br>
-        <input type="text" id="SpotName" name="SpotName" value=""><br>
-        <label for="SpotDescription">Spot description:</label><br>
-        <textarea id="SpotDescription" name="SpotDescription" rows="4" cols="50">
-            </textarea><br>
-        <label for="Latitude">Spot latitude:</label><br>
-        <input type="text" id="Latitude" name="Latitude" value=""><br>
-        <label for="Longitude">Spot longitude:</label><br>
-        <input type="text" id="Longitude" name="Longitude" value=""><br>
-        <label for="img">Spot image:</label><br>
-        <input type="file" id="img" name="img" accept="image/*"><br><br>
-        <input type="submit" value="Submit" name = "getSpot">
-    </form>
-    -->  
 
 </body>
 </html>

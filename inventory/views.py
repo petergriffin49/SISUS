@@ -62,7 +62,6 @@ def DeleteItem(request, pk):
     item.delete()
     return redirect('inventory')  # Redirect to an appropriate page after deletion
 
-
 # [specific item page]
 @login_required
 def Itemdetails(request, item_id):

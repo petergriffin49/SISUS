@@ -19,5 +19,5 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ["Item_name", "Item_description", "Item_amount"]
-
+        
 
