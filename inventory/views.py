@@ -71,7 +71,7 @@ def Itemdetails(request, item_id):
     }
     return HttpResponse(template.render(context,request))
 
-<<<<<<< Updated upstream
+@login_required
 def Maximalview(request):
     template = loader.get_template("inventory/maximal.html")
     Item_list = Item.objects.all()
@@ -79,7 +79,7 @@ def Maximalview(request):
         "Item_list": Item_list,
     }
     return HttpResponse(template.render(context,request))
-=======
+
 @login_required
 def EditItem(request, itemID):
     item = get_object_or_404(Item, id=itemID)
@@ -91,7 +91,6 @@ def EditItem(request, itemID):
             return redirect('Item Details', item_id=item.id)  # Redirect to a detail page or wherever you prefer
     else:
         form = ItemForm(instance=item)
->>>>>>> Stashed changes
     
     return render(request, 'inventory/EditItem.html', {'form': form, 'item': item})
 
