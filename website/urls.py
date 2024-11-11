@@ -15,7 +15,8 @@ urlpatterns = [
     path('maximal/', user_views.Maximalview, name='maximal'),
     path("inventory/add/", user_views.AddItemInv, name = 'add_item'),
     path("delete/<int:pk>/", user_views.DeleteItem, name = 'delete_item'),
-    
+    path('edit/<int:itemID>/', user_views.EditItem, name='edit_item'),
+
     path("analytics/", user_views.Analytics, name = 'analytics'),
     path('admin/', admin.site.urls),
 ]
