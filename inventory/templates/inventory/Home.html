@@ -7,12 +7,25 @@
   <body>
     <h3>Welcome {{ user.username }}!</h3>
     
+    <h8>Low stock:</h8>
+    {% if lowStock_list %}
+        <div class="button-container">
+        {% for item in lowStock_list %}
+            <div>
+            <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }} / {{ item.Item_lowStock }}]</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <h1></h1>
     <div>
-      <a href="{% url 'inventory' %}">Go to Inventory</a>
+      <a href="{% url 'inventory' %}">INVENTORY</a>
     </div>
+    <h1></h1>
     <div>
-      <a href="{% url 'analytics' %}">View Analytics</a>
+      <a href="{% url 'analytics' %}">ANALYTICS</a>
     </div>
+    <h1></h1>
     <div>
       <a href="{% url 'logout' %}">Logout?</a>
     </div>

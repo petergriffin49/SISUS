@@ -4,6 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db.models import F
 from .models import *
 from .forms import *
 
@@ -28,8 +29,9 @@ def logout_view(request):
 # [home screen]
 @login_required
 def HomePage(request):
+    lowStock = Item.objects.filter(Item_amount__lte=F('Item_lowStock'))
     context = {
-        
+        "lowStock_list": lowStock,
     }
     template = loader.get_template("inventory/Home.html")
     return HttpResponse(template.render(context,request))
@@ -37,11 +39,11 @@ def HomePage(request):
 # control room [inventory]
 @login_required
 def Controlroom(request):
-    template = loader.get_template("inventory/Controlroom.html")
     Item_list = Item.objects.all()
     context = {
         "Item_list": Item_list,
     }
+    template = loader.get_template("inventory/Controlroom.html")
     return HttpResponse(template.render(context,request))
 
 @login_required

@@ -4,16 +4,23 @@
       <title>Item Details</title>
   </head>
   <body>
+
+    <a href="/inventory/">back to Inv</a>
+
     <p> <b>{{ Item.Item_name }}</b></p>
     <p> <b>Description:</b> {{ Item.Item_description }} </p>
     <p> <b>Quantity:</b> {{Item.Item_amount }}</p>
 
-    <a href="/edit/{{ Item.id }}/" class="button">Edit {{ Item.Item_name }}</a>
-
-    <form action="{% url 'delete_item' Item.id %}" method="post" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">Delete</button>
-    </form>
+    <div>
+      <a href="/edit/{{ Item.id }}/" class="button">Edit {{ Item.Item_name }}</a>
+    </div>
+    <h1></h1>
+    <div>
+      <form action="{% url 'delete_item' Item.id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </div>
 
   </body>
 </html>
