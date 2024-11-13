@@ -1,79 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Page</title>
-    <style>
-        /* General reset and basic styling */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <style>
+        /* General page styling */
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f9;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
-        /* Header styling */
+        h3 {
+            color: #4a90e2;
+            margin-top: 80px; /* space for the header bar */
+        }
+
+        /* Header Styling */
         .header {
-            margin-bottom: 20px;
-            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 10;
         }
 
         .button-header {
-            padding: 10px 15px;
-            background-color: #4CAF50;
+            margin: 0 15px;
+            padding: 8px 15px;
             color: white;
             text-decoration: none;
-            margin: 5px;
-            border-radius: 5px;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
         }
 
         .button-header:hover {
-            background-color: #45a049;
+            color: #357ab8;
         }
 
-        /* Container for item cards */
-        .button-container {
+        /* Content styling */
+        .content {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 70px; /* Offset from header */
         }
 
-        /* Item card styling */
-        .button-container ul {
-            list-style-type: none;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            width: 220px;
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Dynamic columns */
+            gap: 20px; /* Space between items */
+            width: 100%;
+            max-width: 1200px; /* Max width for the grid */
+            padding: 10px;
         }
 
-        /* Main button on each card */
         .button {
-            display: block;
-            font-weight: bold;
-            color: #333;
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #5bc0de;
+            color: white;
             text-decoration: none;
-            margin-bottom: 10px;
+            border-radius: 5px;
             font-size: 1.1em;
+            transition: background-color 0.3s ease;
         }
 
-        /* Inner item details */
-        .button-container ul li {
-            margin-bottom: 5px;
+        .button:hover {
+            background-color: #39a9c5;
         }
 
-        .button-container ul li b {
+        p {
+            font-size: 1.2em;
             color: #555;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        li {
+            margin-bottom: 20px;
+            text-align: left;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        li a {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #4a90e2;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            color: #357ab8;
+        }
+
+        li p {
+            font-size: 1em;
+            color: #555;
+            margin: 5px 0;
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
@@ -82,19 +138,26 @@
         <a href="/inventory" class="button-header">Minimal view</a>
     </div>
 
-    {% if Item_list %}
-        <div class="button-container">
-        {% for item in Item_list %}
-            <ul>
-                <li><a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }}</a>
-                    <p><b>Amount:</b> {{ item.Item_amount }}</p>
-                    <p><b>Description:</b> {{ item.Item_description }}</p>
-                </li>
-            </ul>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>No items are available.</p>
-    {% endif %}
+    <div class="content">
+        <h3>Inventory</h3>
+
+        {% if Item_list %}
+            <div class="button-container">
+                {% for item in Item_list %}
+                    <ul>
+                        <li>
+                            <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }}</a>
+                            <p><b>Amount:</b> {{ item.Item_amount }}</p>
+                            <p><b>Description:</b> {{ item.Item_description }}</p>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No items are available.</p>
+        {% endif %}
+    </div>
+
 </body>
+
 </html>

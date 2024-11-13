@@ -1,67 +1,117 @@
-<html lang="en-US"> 
-  <head>
-    <meta charset="utf-8" />
-    <title>Control Room</title>
-    <style>
-      .header {
-        background-color: #4CAF50; /* Green background for the header */
-        padding: 15px;
-        text-align: center;
-        color: white;
-        margin-bottom: 20px; /* Space below the header */
-      }
-      .button-header {
-        padding: 10px 15px;
-        background-color: #005e32;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none; /* Remove underline from link */
-        text-align: center;
-        font-weight: bold;
-      }
-      .button-header:hover {
-        background-color: #004927; /* Darker blue on hover */
-      }
-      .button-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px; /* Space between buttons */
-      }
-      .button {
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none; /* Remove underline from link */
-        text-align: center;
-      }
-      .button:hover {
-        background-color: #0056b3; /* Darker blue on hover */
-      }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
 
-  </head>
-  
-  <body>    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h3 {
+            color: #4a90e2;
+            margin-top: 80px; /* space for the header bar */
+        }
+
+        /* Header Styling */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .button-header {
+            margin: 0 15px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .button-header:hover {
+            color: #357ab8;
+        }
+
+        /* Content styling */
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 70px; /* Offset from header */
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .button {
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #5bc0de;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #39a9c5;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
 
     <div class="header">
-      <a href="/home" class="button-header">Home</a>
-      <a href="/inventory/add" class="button-header">Add new item</a>
-      <a href="/maximal" class="button-header">Maximal View</button></a>
+        <a href="/home" class="button-header">Home</a>
+        <a href="/inventory/add" class="button-header">Add new item</a>
+        <a href="/maximal" class="button-header">Maximal View</a>
     </div>
 
-    {% if Item_list %}
-        <div class="button-container">
-        {% for item in Item_list %}
-            <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }}]</a>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>No items are available.</p>
-    {% endif %}
-  </body>
+    <div class="content">
+        <h3>Inventory</h3>
+
+        {% if Item_list %}
+            <div class="button-container">
+                {% for item in Item_list %}
+                    <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No items are available.</p>
+        {% endif %}
+    </div>
+
+</body>
+
 </html>

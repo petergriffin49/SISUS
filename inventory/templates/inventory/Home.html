@@ -1,34 +1,157 @@
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <title>Control Room</title>
-  </head>
-  
-  <body>
-    <h3>Welcome {{ user.username }}!</h3>
-    
-    <h8>Low stock:</h8>
-    {% if lowStock_list %}
-        <div class="button-container">
-        {% for item in lowStock_list %}
-            <div>
-            <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }} / {{ item.Item_lowStock }}]</a>
-            </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <h1></h1>
-    <div>
-      <a href="{% url 'inventory' %}">INVENTORY</a>
-    </div>
-    <h1></h1>
-    <div>
-      <a href="{% url 'analytics' %}">ANALYTICS</a>
-    </div>
-    <h1></h1>
-    <div>
-      <a href="{% url 'logout' %}">Logout?</a>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .button-header {
+            margin: 0 15px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .button-header:hover {
+            color: #357ab8;
+        }
+
+        h3 {
+            color: #4a90e2;
+            margin-top: 120px; /* Adjusted to ensure there's space for the fixed header */
+            text-align: center;
+        }
+
+        h4 {
+            color: #5bc0de;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        h8 {
+            font-size: 1.2em;
+            color: #d9534f;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 60px; /* Space between the title and the low stock section */
+            padding: 10px;
+        }
+
+        .low-stock-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #d9534f;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #5bc0de;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background-color: #39a9c5;
+        }
+
+        .navigation {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .navigation a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: #357ab8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Bar -->
+    <div class="header">
+        <a href="{% url 'inventory' %}" class="button-header">Inventory</a>
+        <a href="{% url 'analytics' %}" class="button-header">Analytics</a>
+        <a href="{% url 'logout' %}" class="button-header">Logout</a>
     </div>
 
-  </body>
+    <!-- Main Content -->
+    <div class="container">
+
+        <h8>Low stock:</h8>
+        {% if lowStock_list %}
+            <div class="button-container">
+                {% for item in lowStock_list %}
+                    <div>
+                        <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }} / {{ item.Item_lowStock }}]</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+    </div>
+
+</body>
+
 </html>

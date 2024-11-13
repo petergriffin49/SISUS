@@ -1,20 +1,23 @@
-<html lang="en-US">
+<html lang="en">
   <head>
-      <meta charset="utf-8" />
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Item Details</title>
   </head>
+
   <body>
 
-    <a href="/inventory/">back to Inv</a>
+    <h3>{{ Item.Item_name }}</h3>
 
-    <p> <b>{{ Item.Item_name }}</b></p>
+    <a href="/inventory/">Inventory</a>
+
     <p> <b>Description:</b> {{ Item.Item_description }} </p>
     <p> <b>Quantity:</b> {{Item.Item_amount }}</p>
 
     <div>
       <a href="/edit/{{ Item.id }}/" class="button">Edit {{ Item.Item_name }}</a>
     </div>
-    <h1></h1>
+
     <div>
       <form action="{% url 'delete_item' Item.id %}" method="post" style="display:inline;">
         {% csrf_token %}
@@ -23,4 +26,5 @@
     </div>
 
   </body>
+
 </html>

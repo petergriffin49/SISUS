@@ -1,9 +1,106 @@
-<h3>login</h3>
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    <p>{{ field.label }}: <br> {{ field }}</p>
-    {% endfor %}
-    <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        h3 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        form p {
+            margin: 15px 0;
+            font-weight: bold;
+            color: #555;
+        }
+
+        form p label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 20px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #39a9c5;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+
+        .signup-link:hover {
+            color: #357ab8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h3>Login</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </p>
+            {% endfor %}
+            <button type="submit" class="button">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}" class="signup-link">Signup here</a></p>
+    </div>
+
+</body>
+
+</html>
