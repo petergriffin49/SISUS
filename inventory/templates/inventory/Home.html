@@ -28,11 +28,9 @@
             background-color: #4a90e2;
             display: flex;
             justify-content: center;
-            align-items: center;
             padding: 10px 0;
             z-index: 10;
         }
-
         .button-header {
             margin: 0 15px;
             padding: 8px 15px;
@@ -41,9 +39,15 @@
             font-size: 1.1em;
             transition: color 0.3s ease;
         }
-
         .button-header:hover {
             color: #357ab8;
+        }
+        .header-text{
+            position: absolute; 
+            right: 20px; 
+            top: 0px;
+            color: black; 
+            font-size: 18px; 
         }
 
         h3 {
@@ -134,20 +138,21 @@
         <a href="{% url 'inventory' %}" class="button-header">Inventory</a>
         <a href="{% url 'analytics' %}" class="button-header">Analytics</a>
         <a href="{% url 'logout' %}" class="button-header">Logout</a>
+        <p class="header-text">{{Username}}</p>
     </div>
 
     <!-- Main Content -->
     <div class="container">
 
-        <h8>Low stock:</h8>
         {% if lowStock_list %}
-            <div class="button-container">
-                {% for item in lowStock_list %}
-                    <div>
-                        <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }} / {{ item.Item_lowStock }}]</a>
-                    </div>
-                {% endfor %}
-            </div>
+          <h8>Low stock:</h8>
+          <div class="button-container">
+              {% for item in lowStock_list %}
+                  <div>
+                      <a href="/inventory/{{ item.id }}/" class="button">{{ item.Item_name }} [{{ item.Item_amount }} / {{ item.Item_lowStock }}]</a>
+                  </div>
+              {% endfor %}
+          </div>
         {% endif %}
         
     </div>

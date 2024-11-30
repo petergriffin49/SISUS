@@ -20,5 +20,3 @@ class ItemForm(forms.ModelForm):
         model = Item
         fields = ["Item_name", "Item_description", "Item_amount", "Item_lowStock"]
         
-
-

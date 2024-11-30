@@ -37,7 +37,6 @@
             padding: 10px 0;
             z-index: 10;
         }
-
         .button-header {
             margin: 0 15px;
             padding: 8px 15px;
@@ -46,9 +45,15 @@
             font-size: 1.1em;
             transition: color 0.3s ease;
         }
-
         .button-header:hover {
             color: #357ab8;
+        }
+        .header-text{
+            position: absolute; 
+            right: 20px; 
+            top: 0px;
+            color: black; 
+            font-size: 18px; 
         }
 
         /* Content styling */
@@ -136,6 +141,7 @@
         <a href="/home" class="button-header">Home</a>
         <a href="/inventory/add" class="button-header">Add new item</a>
         <a href="/inventory" class="button-header">Minimal view</a>
+        <p class="header-text">{{Username}}</p>
     </div>
 
     <div class="content">

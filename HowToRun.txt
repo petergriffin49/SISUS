@@ -4,7 +4,4 @@ py manage.py createsuperuser
 
 env\Scripts\activate
 
-DONE:
-Login
-Register
-Home
+ben3 irock123

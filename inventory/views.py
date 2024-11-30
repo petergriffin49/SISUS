@@ -22,36 +22,70 @@ def register(request):
     return render(request, 'user/register.html', context)
 
 def logout_view(request):
-    logout(request)
     #return render(request, 'user/logout.html')
+    logout(request)
     return redirect('login')
 
 # [home screen]
 @login_required
 def HomePage(request):
-    lowStock = Item.objects.filter(Item_amount__lte=F('Item_lowStock'))
+
+    user = request.user
+    items_for_user = Item_User.objects.filter(user=user).select_related('item')
+    user_items = [item_user.item for item_user in items_for_user]
+    Item_list = Item.objects.filter( # Item_list
+        id__in=[item.id for item in user_items]
+    ).filter(Item_amount__lte=F('Item_lowStock'))
+    
+    Username = user.get_full_name()
     context = {
-        "lowStock_list": lowStock,
+        "lowStock_list": Item_list,
+        "Username": Username,
     }
     template = loader.get_template("inventory/Home.html")
     return HttpResponse(template.render(context,request))
 
-# control room [inventory]
+# control room  / maximal view [inventory]
 @login_required
 def Controlroom(request):
-    Item_list = Item.objects.all()
+    user = request.user
+    items_for_user = Item_User.objects.filter(user=user).select_related('item')
+    Item_list = [item_user.item for item_user in items_for_user]
+    
+    Username = user.get_full_name()
     context = {
         "Item_list": Item_list,
+        "Username": Username,
     }
     template = loader.get_template("inventory/Controlroom.html")
     return HttpResponse(template.render(context,request))
+@login_required
+def Maximalview(request):
+    user = request.user
+    items_for_user = Item_User.objects.filter(user=user).select_related('item')
+    Item_list = [item_user.item for item_user in items_for_user]
 
+    Username = user.get_full_name()
+    context = {
+        "Item_list": Item_list,
+        "Username": Username,
+    }
+    template = loader.get_template("inventory/maximal.html")
+    return HttpResponse(template.render(context,request))
+    
 @login_required
 def AddItemInv(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)  # Include request.FILES
         if form.is_valid():
-            form.save()  # Save the new object
+            newObj = form.save() # saves the new item obj
+            
+            new_userObj = Item_User(
+                item=newObj,
+                user=request.user,
+            )
+            new_userObj.save() # saves the user - item relation object
+            
             return redirect('inventory')  # Redirect to a success page
     else:
         form = ItemForm()
@@ -70,15 +104,6 @@ def Itemdetails(request, item_id):
     template = loader.get_template("inventory/Itemdetails.html")
     context = {
         "Item": Item.objects.get(id = item_id),
-    }
-    return HttpResponse(template.render(context,request))
-
-@login_required
-def Maximalview(request):
-    template = loader.get_template("inventory/maximal.html")
-    Item_list = Item.objects.all()
-    context = {
-        "Item_list": Item_list,
     }
     return HttpResponse(template.render(context,request))
 
