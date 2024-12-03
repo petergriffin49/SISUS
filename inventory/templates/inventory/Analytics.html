@@ -1,15 +1,59 @@
+<!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics</title>
-  </head>
-  
-  <body>
+    <title>Line Graph using Chart.js</title>
+    <!-- Include Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Optional styling to center the canvas */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        canvas {
+            width: 80% !important;
+            height: 80% !important;
+        }
+    </style>
+</head>
+<body>
 
-    <h3>Analytics</h3>
+    <!-- Canvas element to render the chart -->
+    <canvas id="myLineChart"></canvas>
 
-  </body>
-  
+    <script>
+        // Get the context of the canvas element
+        const ctx = document.getElementById('myLineChart').getContext('2d');
+
+        // Create a new chart instance
+        const myLineChart = new Chart(ctx, {
+            type: 'line', // Specifies that the chart type is a line graph
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // X-axis labels
+                datasets: [{
+                    label: 'Analytics', // Label for the dataset
+                    data: [65, 59, 80, 81, 56, 55, 40], // Y-axis values
+                    borderColor: 'rgb(75, 192, 192)', // Line color
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Area fill color
+                    tension: 0.5 // Smoothing of the line
+                }]
+            },
+            options: {
+                responsive: true, // Makes the chart responsive
+                scales: {
+                    y: {
+                        beginAtZero: true // Starts the Y-axis from 0
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
 </html>

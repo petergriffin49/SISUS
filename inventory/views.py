@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import F
+from django.utils import timezone
 from .models import *
 from .forms import *
 
@@ -85,7 +86,14 @@ def AddItemInv(request):
                 user=request.user,
             )
             new_userObj.save() # saves the user - item relation object
-            
+
+            itemEdit_obj = Item_Edit(
+                item=newObj,
+                amount=newObj.Item_amount,
+                time=timezone.now(),
+            )
+            itemEdit_obj.save() # saves the item edit object
+
             return redirect('inventory')  # Redirect to a success page
     else:
         form = ItemForm()
@@ -114,7 +122,15 @@ def EditItem(request, itemID):
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
-            form.save()
+            item_edited = form.save() # saves the item obj, now edited
+
+            itemEdit_obj = Item_Edit(
+                item=item_edited,
+                amount=item_edited.Item_amount,
+                time=timezone.now(),
+            )
+            itemEdit_obj.save() # saves the item edit object
+
             return redirect('Item Details', item_id=item.id)  # Redirect to a detail page or wherever you prefer
     else:
         form = ItemForm(instance=item)
