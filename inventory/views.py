@@ -8,8 +8,7 @@ from django.db.models import F
 from datetime import datetime
 from .models import *
 from .forms import *
-
-from collections import defaultdict
+import random
 
 # [log in crap]
 def register(request):
@@ -106,8 +105,13 @@ def AddItemInv(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)  # Include request.FILES
         if form.is_valid():
-            newObj = form.save() # saves the new item obj
             
+            newObj = form.save() # saves the new item obj 
+            r = lambda: random.randint(0,255)
+            newObj.Item_color = '#%02X%02X%02X' % (r(),r(),r()) # add a random color to the item
+            newObj.save()
+            
+            #
             new_userObj = Item_User(
                 item=newObj,
                 user=request.user,
@@ -174,18 +178,28 @@ def Analytics(request):
         
         if itemName in context_dict:
             if days_difference < days:
-                context_dict[itemName][days-days_difference-1] = edit.amount
+                context_dict[itemName][0][days-days_difference-1] = edit.amount
 
         else:
-            context_dict[itemName] = []
+            context_dict[itemName] = [[],edit.item.Item_color]
             for i in range(days):
-                context_dict[itemName] += [0]
-
+                context_dict[itemName][0] += [0]
+            
             if days_difference < days:
-                context_dict[itemName][days-days_difference-1] = edit.amount
+                context_dict[itemName][0][days-days_difference-1] = edit.amount
 
+        # fix lists
+        for key in context_dict:
+            myList = context_dict[key][0]
+            for i in range(len(myList)):
+                if i > 0:
+                    if myList[i] == 0:
+                        myList[i] = myList[i-1]
+    
     context = {
         'datasets': context_dict
     }
 
     return render(request, 'inventory/Analytics.html', context)
+
+

@@ -7,7 +7,8 @@ class Item(models.Model):
     Item_description = models.CharField(max_length=1000)
     Item_amount = models.IntegerField(default=1)
     Item_lowStock = models.IntegerField(default=10)
-
+    Item_color = models.CharField(max_length=7, default="#000000")
+    
     def __str__(self):
         return f"{self.Item_name} : {self.Item_description} ({self.Item_amount}/{self.Item_lowStock})"
 
