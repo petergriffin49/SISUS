@@ -5,9 +5,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import F
-from django.utils import timezone
+from datetime import datetime
 from .models import *
 from .forms import *
+
+from collections import defaultdict
 
 # [log in crap]
 def register(request):
@@ -73,7 +75,32 @@ def Maximalview(request):
     }
     template = loader.get_template("inventory/maximal.html")
     return HttpResponse(template.render(context,request))
+
+
+def itemEditAdd(item_obj):
+    itemEdit_obj = Item_Edit(
+        item=item_obj,
+        amount=newObj.Item_amount,
+        time=datetime.today().strftime('%Y-%m-%d'),
+    )
+    itemEdit_obj.save()
+
+# add an Item_Edit object based on the given Item obj
+def itemEditAdd(item_obj):
+    # delete any obj that has the same itemid and date
+    myItem = item_obj
+    myTime = datetime.today().strftime('%Y-%m-%d')
+    items_to_delete = Item_Edit.objects.filter(item=myItem, time=myTime)
+    items_to_delete.delete()
     
+    # create new one
+    itemEdit_obj = Item_Edit(
+        item=item_obj,
+        amount=item_obj.Item_amount,
+        time=datetime.today().strftime('%Y-%m-%d'),
+    )
+    itemEdit_obj.save()
+
 @login_required
 def AddItemInv(request):
     if request.method == 'POST':
@@ -87,12 +114,7 @@ def AddItemInv(request):
             )
             new_userObj.save() # saves the user - item relation object
 
-            itemEdit_obj = Item_Edit(
-                item=newObj,
-                amount=newObj.Item_amount,
-                time=timezone.now(),
-            )
-            itemEdit_obj.save() # saves the item edit object
+            itemEditAdd(newObj)
 
             return redirect('inventory')  # Redirect to a success page
     else:
@@ -124,12 +146,7 @@ def EditItem(request, itemID):
         if form.is_valid():
             item_edited = form.save() # saves the item obj, now edited
 
-            itemEdit_obj = Item_Edit(
-                item=item_edited,
-                amount=item_edited.Item_amount,
-                time=timezone.now(),
-            )
-            itemEdit_obj.save() # saves the item edit object
+            itemEditAdd(item_edited)
 
             return redirect('Item Details', item_id=item.id)  # Redirect to a detail page or wherever you prefer
     else:
@@ -141,6 +158,34 @@ def EditItem(request, itemID):
 # [analytics]
 @login_required
 def Analytics(request):
-    context = {}
-    template = loader.get_template("inventory/Analytics.html")
-    return HttpResponse(template.render(context,request))
+
+    user = request.user
+    user_items = Item_User.objects.filter(user=user).values_list('item', flat=True)
+    item_edits = Item_Edit.objects.filter(item__in=user_items)
+
+    days = 7
+
+    context_dict = {}
+    for edit in item_edits:
+        itemName = edit.item.Item_name
+
+        current_date = datetime.today().date()
+        days_difference = (current_date - edit.time).days
+        
+        if itemName in context_dict:
+            if days_difference < days:
+                context_dict[itemName][days-days_difference-1] = edit.amount
+
+        else:
+            context_dict[itemName] = []
+            for i in range(days):
+                context_dict[itemName] += [0]
+
+            if days_difference < days:
+                context_dict[itemName][days-days_difference-1] = edit.amount
+
+    context = {
+        'datasets': context_dict
+    }
+
+    return render(request, 'inventory/Analytics.html', context)

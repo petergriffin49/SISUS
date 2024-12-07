@@ -23,7 +23,7 @@ class Item_User(models.Model):
 class Item_Edit(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     amount = models.IntegerField(default=1)
-    time = models.DateTimeField()
+    time = models.DateField()
     
     def __str__(self):
         return f"{self.item.Item_name} @ {self.time}"
