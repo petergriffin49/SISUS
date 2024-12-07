@@ -140,7 +140,7 @@ def Itemdetails(request, item_id):
 @login_required
 def EditItem(request, itemID):
     item = get_object_or_404(Item, id=itemID)
-
+    user = request.user
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
@@ -148,7 +148,7 @@ def EditItem(request, itemID):
 
             itemEditAdd(item_edited)
 
-            return redirect('Item Details', item_id=item.id)  # Redirect to a detail page or wherever you prefer
+            return redirect('Item Details', item_id=item.id,)  # Redirect to a detail page or wherever you prefer
     else:
         form = ItemForm(instance=item)
     
