@@ -26,14 +26,27 @@
 </head>
 <body>
     <h1>Analytics Line Graph</h1>
-
-    {{datasets}}
+    
+    <!--{{ datasets }}-->
 
     <canvas id="myLineChart"></canvas>
 
     <script>
-        
-        //labels
+        // color shit
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) {
+                hex = hex.split('').map(function (char) {
+                    return char + char;
+                }).join('');
+            }
+            let r = parseInt(hex.slice(0, 2), 16);
+            let g = parseInt(hex.slice(2, 4), 16);
+            let b = parseInt(hex.slice(4, 6), 16);
+            return { r: r, g: g, b: b };
+        }
+
+        // labels
         const days = 7;
         
         let currentDate = new Date();
@@ -46,23 +59,27 @@
         }
         labels = dateStrings.reverse()
         
+        // dataset
+        var dataset = {{ datasets|safe }};
+        var dat = []
+        for (let key in dataset) {
+            let list = dataset[key][0];
+            let col = hexToRgb(dataset[key][1]);
+            let colstr = 'rgba(' + col.r + ', ' + col.g + ', ' + col.b + ', 1)'
+            let obj = {
+                label: key,
+                data: list,
+                borderColor: colstr,               
+            }
+            dat.push(obj)
+        }
+        
+        // plug into chart
         const data = {
             labels: labels,
-            datasets: [
-                {
-                label: 'Monthly Sales',
-                data: [30, 45, 60, 55, 70, 80, 90],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                },
-                {
-                label: 'Monthly Sales',
-                data: [54, 99], 
-                borderColor: 'rgba(75, 192, 0, 1)',
-                },
-
-            ]   
+            datasets: dat
         };
-
+        
         // Configuration options for the line chart
         const config = {
             type: 'line',
