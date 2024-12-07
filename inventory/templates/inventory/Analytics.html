@@ -22,6 +22,23 @@
             max-width: 80%;
             max-height: 80%;
         }
+        .rate-of-change-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping if there are too many bubbles */
+            justify-content: center;
+            gap: 10px; /* Space between bubbles */
+            margin-top: 20px;
+        }
+        .rate-bubble {
+            background-color: #f0f8ff; /* Light blue background */
+            border: 1px solid #ccc;
+            border-radius: 20px; /* Rounded corners for bubble effect */
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #333;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for a 3D effect */
+        }
     </style>
 </head>
 <body>
@@ -32,7 +49,6 @@
     <canvas id="myLineChart"></canvas>
 
     <script>
-        // color shit
         function hexToRgb(hex) {
             hex = hex.replace('#', '');
             if (hex.length === 3) {
@@ -57,21 +73,21 @@
             dateStrings.push(`${month}/${day}`);
             currentDate.setDate(currentDate.getDate() - 1);
         }
-        labels = dateStrings.reverse()
+        labels = dateStrings.reverse();
         
         // dataset
         var dataset = {{ datasets|safe }};
-        var dat = []
+        var dat = [];
         for (let key in dataset) {
             let list = dataset[key][0];
             let col = hexToRgb(dataset[key][1]);
-            let colstr = 'rgba(' + col.r + ', ' + col.g + ', ' + col.b + ', 1)'
+            let colstr = 'rgba(' + col.r + ', ' + col.g + ', ' + col.b + ', 1)';
             let obj = {
                 label: key,
                 data: list,
                 borderColor: colstr,               
-            }
-            dat.push(obj)
+            };
+            dat.push(obj);
         }
         
         // plug into chart
@@ -114,5 +130,13 @@
         const ctx = document.getElementById('myLineChart').getContext('2d');
         const myLineChart = new Chart(ctx, config);
     </script>
+
+    <div class="rate-of-change-container">
+        {% if rateOfChange %}
+            {% for amount, key in rateOfChange %}
+                <span class="rate-bubble">Rate of change for {{key}}: {{amount}} items/day</span>
+            {% endfor %}
+        {% endif %}
+    </div>
 </body>
 </html>

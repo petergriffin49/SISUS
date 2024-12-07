@@ -170,13 +170,20 @@ def Analytics(request):
     days = 7
 
     context_dict = {}
+    ROCN_dict = {}
+    ROCA_dict = {}
+    
+    # For all items the user currently possesses:
     for edit in item_edits:
+        # Names of all items the user currently possesses
         itemName = edit.item.Item_name
 
         current_date = datetime.today().date()
+        # Last time the item has been edited
         days_difference = (current_date - edit.time).days
         
         if itemName in context_dict:
+            # If the item has been edited in the last seven days
             if days_difference < days:
                 context_dict[itemName][0][days-days_difference-1] = edit.amount
 
@@ -187,7 +194,7 @@ def Analytics(request):
             
             if days_difference < days:
                 context_dict[itemName][0][days-days_difference-1] = edit.amount
-
+        
         # fix lists
         for key in context_dict:
             myList = context_dict[key][0]
@@ -196,8 +203,17 @@ def Analytics(request):
                     if myList[i] == 0:
                         myList[i] = myList[i-1]
     
+    
+    for item in context_dict:
+        l = context_dict[item][0]
+        i = l[6] - l[0] / 7 
+        ROCA_dict[i] = 0;
+        ROCN_dict[item] = 0;
+        
+        
     context = {
-        'datasets': context_dict
+        'datasets': context_dict,
+        'rateOfChange': zip(ROCA_dict,ROCN_dict)
     }
 
     return render(request, 'inventory/Analytics.html', context)
