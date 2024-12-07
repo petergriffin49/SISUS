@@ -1,24 +1,138 @@
+<!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Item</title>
-  </head>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
 
-  <body>
+        h3 {
+            color: #4a90e2;
+            margin-top: 80px; /* space for the header bar */
+        }
+
+        /* Header Styling */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .button-header {
+            margin: 0 15px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .button-header:hover {
+            color: #357ab8;
+        }
+
+        /* Form styling */
+        form {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form p {
+            margin: 15px 0;
+            font-weight: bold;
+            color: #555;
+        }
+
+        form p label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 20px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #39a9c5;
+        }
+
+        /* Cancel link styling */
+        .cancel-link {
+            margin-top: 15px;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .cancel-link:hover {
+            color: #357ab8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="/" class="button-header">Home</a>
+        <a href="/inventory/" class="button-header">Inventory</a>
+        <a href="/inventory/{{item.id}}" class="button-header">Item</a>
+    </div>
 
     <h3>Edit: {{ item.Item_name }}</h3>
 
     <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Save changes</button>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
     </form>
 
-    <a href="{% url 'Item Details' item.id %}">Cancel</a>
+    <a href="{% url 'Item Details' item.id %}" class="cancel-link">Cancel</a>
 
 </body>
 
 </html>
-
