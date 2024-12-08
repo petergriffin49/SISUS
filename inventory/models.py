@@ -1,14 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 #
 class Item(models.Model):
-    
     Item_name = models.CharField(max_length=100)
     Item_description = models.CharField(max_length=1000)
-    Item_amount = models.IntegerField(default=1)
-    Item_lowStock = models.IntegerField(default=10)
+    Item_amount = models.IntegerField(default=1, validators=[MinValueValidator(0)])
+    Item_lowStock = models.IntegerField(default=10, validators=[MinValueValidator(0)])
     Item_color = models.CharField(max_length=7, default="#000000")
     
     def __str__(self):

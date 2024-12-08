@@ -62,6 +62,7 @@ def Controlroom(request):
     template = loader.get_template("inventory/Controlroom.html")
     return HttpResponse(template.render(context,request))
 @login_required
+
 def Maximalview(request):
     user = request.user
     items_for_user = Item_User.objects.filter(user=user).select_related('item')
@@ -206,9 +207,10 @@ def Analytics(request):
     
     for item in context_dict:
         l = context_dict[item][0]
-        i = l[6] - l[0] / 7 
-        ROCA_dict[i] = 0;
-        ROCN_dict[item] = 0;
+        
+        i = round((l[6] - l[0]) / float(7),2)
+        ROCA_dict[i] = 0
+        ROCN_dict[item] = 0
         
         
     context = {
