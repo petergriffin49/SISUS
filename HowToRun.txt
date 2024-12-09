@@ -1,7 +1,0 @@
-py manage.py runserver
-
-py manage.py createsuperuser
-
-env\Scripts\activate
-
-ben3 irock123

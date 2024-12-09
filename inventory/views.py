@@ -196,13 +196,13 @@ def Analytics(request):
             if days_difference < days:
                 context_dict[itemName][0][days-days_difference-1] = edit.amount
         
-        # fix lists
-        for key in context_dict:
-            myList = context_dict[key][0]
-            for i in range(len(myList)):
-                if i > 0:
-                    if myList[i] == 0:
-                        myList[i] = myList[i-1]
+    # fix lists
+    for key in context_dict:
+        myList = context_dict[key][0]
+        for i in range(len(myList)):
+            if i > 0:
+                if myList[i] == 0:
+                    myList[i] = myList[i-1]
     
     
     for item in context_dict:
